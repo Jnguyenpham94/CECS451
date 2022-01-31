@@ -5,6 +5,7 @@
 # ▪ℎ(𝑛) = estimated cost to goal from 𝑛
 # ▪𝑓(𝑛) = estimated total cost of path through 𝑛 to goal
 import math
+import sys
 
 
 # convert straight line distance between 2 points
@@ -24,7 +25,7 @@ try:
     map_text = open("map.txt").read().strip()
 # print(map_text)
 except FileNotFoundError:
-    print("File Not Found")
+    print("map.txt Not Found")
     exit(1)
 
 # parse coordinates.txt to usable values
@@ -35,26 +36,26 @@ try:
         coordinates_text = coordinates_text.replace(chars, " ")
     coordinates_text = coordinates_text.split()
     distance = {}
-    latitude = 1
+    index = 1
     for x in range(len(coordinates_text)):
         try:
-            distance[coordinates_text[x]] = haversine(coordinates_text.pop(latitude), coordinates_text.pop(latitude))
-            latitude += 1
+            distance[coordinates_text[x]] = haversine(coordinates_text.pop(index), coordinates_text.pop(index))
+            index += 1
         except IndexError:
             break
-    print(distance)
+    # print(distance)
     # print(coordinates_text)
 except FileNotFoundError:
-    print("File Not Found")
-    exit(1)
+    print("coordinates.txt Not Found")
+    exit(2)
 
-with open('map.txt') as f:
-    map_text = f.readlines()
 
-with open('coordinates.txt') as f:
-    coordinates = f.readlines()
+def main(args):
+    start = args[0]  # starting city (SanFrancisco)
+    end = args[1]   # ending city (LongBeach
+    # print(start)
+    # print(end)
 
-# print(map_text)
-# print(coordinates)
 
-# haversine(37.38305013, -121.8734782)
+if __name__ == '__main__':
+    main(sys.argv[1:])
