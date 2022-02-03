@@ -9,7 +9,7 @@ import math
 import sys
 
 
-class Node(object):
+class Node:
     def __init__(self, data):
         self.distance = data
         self.children = []
@@ -30,10 +30,26 @@ def haversine(latitude1, longitude1, latitude2, longigude2):
     # print(d)
     return d
 
-
+# TODO: need to parse map.txt into nodes
 try:
-    map_text = open("map.txt").read().strip()
-# print(map_text)
+    map_text = open("map.txt")
+    while map_text.readline() != "":
+        map_line = map_text.readline()
+        remove_chars = "-()"
+        for chars in remove_chars:
+            map_line = map_line.replace(chars, " ")
+        map_line = map_line.split()
+        print(map_line)
+        if map_line == "":
+            break
+    map_text.close()
+    remove_chars = "-()"
+    for chars in remove_chars:
+        map_text = map_text.replace(chars, " ")
+    map_text = map_text.split()
+    # for x in range(len(map_text)):
+
+    print(map_text)
 except FileNotFoundError:
     print("map.txt Not Found")
     exit(1)
@@ -64,7 +80,8 @@ except FileNotFoundError:
 def main(args):
     start = args[0]  # starting city (SanFrancisco)
     end = args[1]  # ending city (LongBeach)
-    straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"], distance[end]["longitude"], )  # h(n)
+    straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"],
+                              distance[end]["longitude"], )  # h(n)
     p = Node(121)
     p2 = Node(315)
     p3 = Node(35)

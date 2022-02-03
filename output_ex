@@ -1,0 +1,11 @@
+python a-star.py SanFrancisco LongBeach
+From city: SanFrancisco
+To city: LongBeach
+Best Route: SanFrancisco - SanJose - Fresno - LosAngeles - LongBeach
+Total distance: 442 mi
+
+Revised Output:
+From city: Monterey
+To city: SanDiego
+Best Route: Monterey - SantaBarbara - SantaMonica - LosAngeles - Anaheim - SanDiego
+Total distance: 465.60 mi
