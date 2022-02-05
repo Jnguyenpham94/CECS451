@@ -9,3 +9,28 @@ From city: Monterey
 To city: SanDiego
 Best Route: Monterey - SantaBarbara - SantaMonica - LosAngeles - Anaheim - SanDiego
 Total distance: 465.60 mi
+
+From city: Eureka
+To city: Monterey
+Best Route: Eureka - SanFrancisco - SanJose - Monterey
+Total distance: 391.10 mi
+
+From city: Monterey
+To city: SanDiego
+Best Route: Monterey - SantaBarbara - SantaMonica - LosAngeles - Anaheim - SanDiego
+Total distance: 465.60 mi
+
+From city: Yosemite
+To city: LongBeach
+Best Route: Yosemite - Fresno - LosAngeles - LongBeach
+Total distance: 338.00 mi
+
+From city: LongBeach
+To city: SanFrancisco
+Best Route: LongBeach - LosAngeles - Fresno - SanJose - SanFrancisco
+Total distance: 442.50 mi
+
+From city: Eureka
+To city: SouthLakeTahoe
+Best Route: Eureka - Sacramento - SouthLakeTahoe
+Total distance: 392.00 mi

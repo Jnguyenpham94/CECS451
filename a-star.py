@@ -9,15 +9,6 @@ import math
 import sys
 
 
-class Node:
-    def __init__(self, data):
-        self.distance = data
-        self.children = []
-
-    def add_child(self, obj):
-        self.children.append(obj)
-
-
 # convert straight line distance between 2 points
 def haversine(latitude1, longitude1, latitude2, longigude2):
     lat1 = math.radians(float(latitude1))
@@ -27,27 +18,38 @@ def haversine(latitude1, longitude1, latitude2, longigude2):
     r = 3958.8  # miles
     d = 2 * r * math.asin(math.sqrt(math.sin((lat2 - lat1) / 2) ** 2) + math.cos(lat1) * math.cos(lat2) * math.sin(
         (long2 - long1) / 2) ** 2)
-    # print(d)
     return d
 
-# TODO: need to parse map.txt into nodes
+
+class Node:
+    distance = 0
+
+    def __init__(self, name, data):
+        self.name = name
+        self.distance = data
+        self.child = []
+
+
+def add_node(name, data):
+    new_node = Node(name, data)
+    return new_node
+
+
 try:
-    map_text = open("map.txt")
-    while map_text.readline() != "":
-        map_line = map_text.readline()
-        remove_chars = "-()"
-        for chars in remove_chars:
-            map_line = map_line.replace(chars, " ")
-        map_line = map_line.split()
-        print(map_line)
-        if map_line == "":
-            break
-    map_text.close()
-    remove_chars = "-()"
+    map_text = open("map.txt").read()
+    remove_chars = "-,()"
     for chars in remove_chars:
         map_text = map_text.replace(chars, " ")
     map_text = map_text.split()
-    # for x in range(len(map_text)):
+    # TODO: need to parse map.txt into nodes
+    for x in range(len(map_text)):
+        distance = 0
+        if map_text[x].isalpha():
+            city = map_text[x]
+        else:
+            distance = float(map_text[x])
+
+        city_map = Node(city, distance)
 
     print(map_text)
 except FileNotFoundError:
@@ -82,16 +84,6 @@ def main(args):
     end = args[1]  # ending city (LongBeach)
     straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"],
                               distance[end]["longitude"], )  # h(n)
-    p = Node(121)
-    p2 = Node(315)
-    p3 = Node(35)
-    p.add_child(p2)
-    p.add_child(p3)
-    for d in p.children:
-        print(d.distance)
-    # print(straight_line)
-    # print(start)
-    # print(end)
 
 
 if __name__ == '__main__':
