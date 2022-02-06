@@ -22,36 +22,43 @@ def haversine(latitude1, longitude1, latitude2, longigude2):
 
 
 class Node:
-    distance = 0
 
     def __init__(self, name, data):
         self.name = name
         self.distance = data
         self.child = []
 
-
-def add_node(name, data):
-    new_node = Node(name, data)
-    return new_node
+    def add_child(self, name, data):
+        new_node = Node(name, data)
+        self.child.append(new_node)
 
 
 try:
+    list_map = []
     map_text = open("map.txt").read()
+    # print(map_text)
     remove_chars = "-,()"
     for chars in remove_chars:
         map_text = map_text.replace(chars, " ")
-    map_text = map_text.split()
+    # print(map_text)
+    map_text = map_text.splitlines()
+    # print(map_text)
+    for line in map_text:
+        line = line.split()
+        x = 0
+        while not line:
+            distance = 0
+            if line[x].isalpha():
+                city = map_text[x]
+            else:
+                distance = float(map_text[x])
+
+            city_map = Node(city, distance)
+            list_map.append(city_map)
+        x = 0
     # TODO: need to parse map.txt into nodes
-    for x in range(len(map_text)):
-        distance = 0
-        if map_text[x].isalpha():
-            city = map_text[x]
-        else:
-            distance = float(map_text[x])
-
-        city_map = Node(city, distance)
-
     print(map_text)
+    print(city_map)
 except FileNotFoundError:
     print("map.txt Not Found")
     exit(1)
@@ -84,6 +91,11 @@ def main(args):
     end = args[1]  # ending city (LongBeach)
     straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"],
                               distance[end]["longitude"], )  # h(n)
+    # p = Node("SanFrancisco", 48.3)
+    # p.add_child("Monterey", 71.7)
+    # p.add_child("Fresno", 149)
+    # for child in p.child:
+    #     print(child.name + " " + str(child.distance))
 
 
 if __name__ == '__main__':
