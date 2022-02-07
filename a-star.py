@@ -26,13 +26,22 @@ class Node:
     def __init__(self, name, data):
         self.name = name
         self.distance = data
-        self.child = []
+        self.children = []
 
     def add_child(self, name, data):
         new_node = Node(name, data)
-        self.child.append(new_node)
+        self.children.append(new_node)
 
 
+def isfloat(element):
+    try:
+        float(element)
+        return True
+    except ValueError:
+        return False
+
+
+# parsing the map.txt & coordinates.txt
 try:
     list_map = []
     map_text = open("map.txt").read()
@@ -46,19 +55,22 @@ try:
     for line in map_text:
         line = line.split()
         x = 0
-        while not line:
-            distance = 0
+        city_node = Node("empty", 0)
+        count = 0
+        while len(line) > 0:
+            distance = 0.0
             if line[x].isalpha():
-                city = map_text[x]
+                city = line.pop(x)
+                if isfloat(line[x]):
+                    distance = float(line.pop(x))
+            if count > 0:
+                city_node.add_child(city, distance)
+                count += 1
             else:
-                distance = float(map_text[x])
-
-            city_map = Node(city, distance)
-            list_map.append(city_map)
-        x = 0
-    # TODO: need to parse map.txt into nodes
-    print(map_text)
-    print(city_map)
+                city_node = Node(city, distance)
+                count += 1
+        list_map.append(city_node)
+        count = 0
 except FileNotFoundError:
     print("map.txt Not Found")
     exit(1)
@@ -79,7 +91,7 @@ try:
             index += 1
         except IndexError:
             break
-    # print(distance)
+    print(distance)
     # print(coordinates_text)
 except FileNotFoundError:
     print("coordinates.txt Not Found")
@@ -91,6 +103,7 @@ def main(args):
     end = args[1]  # ending city (LongBeach)
     straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"],
                               distance[end]["longitude"], )  # h(n)
+    # TODO: A* algo below
     # p = Node("SanFrancisco", 48.3)
     # p.add_child("Monterey", 71.7)
     # p.add_child("Fresno", 149)
