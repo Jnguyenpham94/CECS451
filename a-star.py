@@ -9,7 +9,7 @@ import math
 import sys
 
 
-# convert straight line distance between 2 points
+# convert straight line distance between 2 points using 2 sets of latitude & longitude values
 def haversine(latitude1, longitude1, latitude2, longigude2):
     lat1 = math.radians(float(latitude1))
     long1 = math.radians(float(longitude1))
@@ -28,6 +28,10 @@ class Node:
         self.distance = data
         self.children = []
 
+    def __repr__(self):
+        rep = self.name
+        return rep
+
     def add_child(self, name, data):
         new_node = Node(name, data)
         self.children.append(new_node)
@@ -43,15 +47,12 @@ def isfloat(element):
 
 # parsing the map.txt & coordinates.txt
 try:
-    list_map = []
+    city_list = []
     map_text = open("map.txt").read()
-    # print(map_text)
     remove_chars = "-,()"
     for chars in remove_chars:
         map_text = map_text.replace(chars, " ")
-    # print(map_text)
     map_text = map_text.splitlines()
-    # print(map_text)
     for line in map_text:
         line = line.split()
         x = 0
@@ -69,8 +70,7 @@ try:
             else:
                 city_node = Node(city, distance)
                 count += 1
-        list_map.append(city_node)
-        count = 0
+        city_list.append(city_node)
 except FileNotFoundError:
     print("map.txt Not Found")
     exit(1)
@@ -91,24 +91,48 @@ try:
             index += 1
         except IndexError:
             break
-    print(distance)
-    # print(coordinates_text)
 except FileNotFoundError:
     print("coordinates.txt Not Found")
     exit(2)
 
 
+def a_star(start, goal, straight_distance):
+    global city_list
+    f = 0
+    g = 0
+    h = straight_distance
+    #   find starting node in city list
+    for i in range(len(city_list)):
+        if start == city_list[i].name:
+            begin = i
+            break
+    traversal = [city_list[begin]]
+    list_1 = [city_list[begin]]
+    list_2 = []
+    #   TODO: implement the search
+    while len(list_1) > 0:
+        current = None
+
+        if current is None:
+            print('Path does not exist!')
+            return None
+
+
 def main(args):
+
     start = args[0]  # starting city (SanFrancisco)
     end = args[1]  # ending city (LongBeach)
     straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"],
                               distance[end]["longitude"], )  # h(n)
+
+    # for i in city_list:
+    #     print(repr(i))
     # TODO: A* algo below
-    # p = Node("SanFrancisco", 48.3)
-    # p.add_child("Monterey", 71.7)
-    # p.add_child("Fresno", 149)
-    # for child in p.child:
-    #     print(child.name + " " + str(child.distance))
+    a_star(start, end, straight_line)
+    print("From city: " + start)
+    print("To city: " + end)
+    print("Best Route: ")
+    print("Total distance: ")
 
 
 if __name__ == '__main__':
