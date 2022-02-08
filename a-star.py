@@ -27,6 +27,9 @@ class Node:
         self.name = name
         self.distance = data
         self.children = []
+        self.f = 0
+        self.g = 0
+        self.h = 0
 
     def __repr__(self):
         rep = self.name
@@ -47,7 +50,7 @@ def isfloat(element):
 
 # parsing the map.txt & coordinates.txt
 try:
-    city_list = []
+    city_list = collections.defaultdict(dict)
     map_text = open("map.txt").read()
     remove_chars = "-,()"
     for chars in remove_chars:
@@ -70,7 +73,7 @@ try:
             else:
                 city_node = Node(city, distance)
                 count += 1
-        city_list.append(city_node)
+        city_list[city_node.name] = city_node
 except FileNotFoundError:
     print("map.txt Not Found")
     exit(1)
@@ -102,20 +105,34 @@ def a_star(start, goal, straight_distance):
     g = 0
     h = straight_distance
     #   find starting node in city list
-    for i in range(len(city_list)):
-        if start == city_list[i].name:
-            begin = i
-            break
+    if start in city_list:
+        begin = city_list[start]
+    if goal in city_list:
+        end = city_list[goal]
+    end_node = city_list[end]
     traversal = [city_list[begin]]
     list_1 = [city_list[begin]]
     list_2 = []
     #   TODO: implement the search
     while len(list_1) > 0:
-        current = None
+        current = list_1[0]
+        current_index = 0
 
-        if current is None:
-            print('Path does not exist!')
-            return None
+        for i, item in enumerate(list_1):
+            if item.f < current.f:
+                current = item
+                current_index = i
+        list_1.pop(current_index)
+        list_2.append(current)
+
+        # Found the goal
+        if current == end_node:
+            path = []
+            current = current
+            while current is not None:
+                path.append(current.position)
+                current = current.parent
+            return path[::-1]  # Return reversed path
 
 
 def main(args):
@@ -127,8 +144,8 @@ def main(args):
 
     # for i in city_list:
     #     print(repr(i))
-    # TODO: A* algo below
-    a_star(start, end, straight_line)
+    stuff = a_star(start, end, straight_line)
+    print(stuff)
     print("From city: " + start)
     print("To city: " + end)
     print("Best Route: ")
