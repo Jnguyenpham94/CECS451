@@ -112,8 +112,7 @@ def a_star(start, goal, straight_distance):
     h = straight_distance
     g = collections.defaultdict(dict)
     list_1 = collections.defaultdict(dict)
-    list_2 = collections.defaultdict(dict)
-    came = collections.defaultdict(dict)
+    cameFrom = collections.defaultdict(dict)
 
     #   find starting & end node in city list
     if start in city_list:
@@ -130,17 +129,20 @@ def a_star(start, goal, straight_distance):
     while len(list_1) > 0:
         current = list_1[begin.name]
 
-        if current.name == goal:
-            return recon_path(came, current)
+        if current.name == goal:  # TODO: pathing
+            return recon_path(cameFrom, current)
         del list_1[current.name]
         for loc, child in enumerate(current.children):
             temp_g = g[current.name].distance + city_list.get(current.name).children[loc].distance
-            if temp_g < g.get(current.name).children[loc].distance:
-                came[child] = current
-                temp = temp_g
-                f[child] = temp_g + child
+            if temp_g < g.get(current.name).children[loc].distance:  # TODO: ISSUE HERE!!
+                cameFrom[child] = current.name
+                g.get(current.name).children[loc] = temp_g
+                f[current.name] = temp_g + haversine(distance[current.name]["latitude"],
+                                                     distance[current.name]["longitude"],
+                                                     distance[str(child)]["latitude"],
+                                                     distance[str(child)]["longitude"])
                 if child not in list_1:
-                    list_1[child.name] = child
+                    list_1[child.name] = city_list.get(str(child))
     return "Failed to find path"
 
 
@@ -152,11 +154,10 @@ def main(args):
 
     # print(city_list.get("SanFrancisco").children[0].distance)
     stuff = a_star(start, end, straight_line)
-    print(stuff)
     print("From city: " + start)
     print("To city: " + end)
     print("Best Route: ")
-    print("Total distance: ")
+    print("Total distance: " + stuff)
 
 
 if __name__ == '__main__':
