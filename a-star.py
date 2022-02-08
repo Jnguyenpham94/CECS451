@@ -25,10 +25,9 @@ class Node:
 
     def __init__(self, name, data):
         self.name = name
-        self.distance = data
+        self.distance = data  # g value
         self.children = []
         self.f = 0
-        self.g = 0
         self.h = 0
 
     def __repr__(self):
@@ -46,6 +45,14 @@ def isfloat(element):
         return True
     except ValueError:
         return False
+
+
+def recon_path(came, current):
+    total = current
+    while current in came.Keys:
+        current = came[current]
+        total.insert(current)
+    return total
 
 
 # parsing the map.txt & coordinates.txt
@@ -101,49 +108,49 @@ except FileNotFoundError:
 
 def a_star(start, goal, straight_distance):
     global city_list
-    f = 0
-    g = 0
+    f = collections.defaultdict(dict)
     h = straight_distance
-    #   find starting node in city list
+    g = collections.defaultdict(dict)
+    list_1 = collections.defaultdict(dict)
+    list_2 = collections.defaultdict(dict)
+    came = collections.defaultdict(dict)
+
+    #   find starting & end node in city list
     if start in city_list:
         begin = city_list[start]
     if goal in city_list:
         end = city_list[goal]
     end_node = city_list[end]
+
     traversal = [city_list[begin]]
-    list_1 = [city_list[begin]]
-    list_2 = []
+    list_1[begin.name] = begin
+    f[begin.name] = h
+    g[begin.name] = city_list[start]
     #   TODO: implement the search
     while len(list_1) > 0:
-        current = list_1[0]
-        current_index = 0
+        current = list_1[begin.name]
 
-        for i, item in enumerate(list_1):
-            if item.f < current.f:
-                current = item
-                current_index = i
-        list_1.pop(current_index)
-        list_2.append(current)
-
-        # Found the goal
-        if current == end_node:
-            path = []
-            current = current
-            while current is not None:
-                path.append(current.position)
-                current = current.parent
-            return path[::-1]  # Return reversed path
+        if current.name == goal:
+            return recon_path(came, current)
+        del list_1[current.name]
+        for loc, child in enumerate(current.children):
+            temp_g = g[current.name].distance + city_list.get(current.name).children[loc].distance
+            if temp_g < g.get(current.name).children[loc].distance:
+                came[child] = current
+                temp = temp_g
+                f[child] = temp_g + child
+                if child not in list_1:
+                    list_1[child.name] = child
+    return "Failed to find path"
 
 
 def main(args):
-
     start = args[0]  # starting city (SanFrancisco)
     end = args[1]  # ending city (LongBeach)
     straight_line = haversine(distance[start]["latitude"], distance[start]["longitude"], distance[end]["latitude"],
                               distance[end]["longitude"], )  # h(n)
 
-    # for i in city_list:
-    #     print(repr(i))
+    # print(city_list.get("SanFrancisco").children[0].distance)
     stuff = a_star(start, end, straight_line)
     print(stuff)
     print("From city: " + start)
