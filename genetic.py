@@ -6,12 +6,11 @@ goal = []
 fitness = []
 population = []
 found = False
+# count = 0
 
 
-def genetic():
-    global goal
-    global fitness  # fitnesses of states
-    global found
+#  generate the first 8 parent states
+def populate():
     row = 0
     state = ""
     states = 0
@@ -26,6 +25,14 @@ def genetic():
         row = 0
         states += 1
         state = ""
+    return population, fitness
+
+
+def genetic():
+    global goal
+    global fitness  # fitnesses of states
+    global found
+    global population
     weight = []  # contains fitness function of current gen
     for i in fitness:
         weight.append(i / (sum(fitness)))
@@ -82,11 +89,15 @@ def genetic():
 
 def main():
     start = time.time() * 1000
+    global population, fitness  # , count
+    population, fitness = populate()
     while not found:
         genetic()
+        # count += 1  # testing purpose: how many iterations it takes
     end = time.time() * 1000
     print(f"Runtime of the program is {end - start:.2f}ms")
     # print(goal.get_fitness())
+    # print("count: " + str(count))
     goal.show_map()
 
 
