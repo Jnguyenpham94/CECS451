@@ -26,7 +26,7 @@ def genetic():
         row = 0
         states += 1
         state = ""
-    weight = [] # contains fitness function of current gen
+    weight = []  # contains fitness function of current gen
     for i in fitness:
         weight.append(i / (sum(fitness)))
     # selection of pairs
@@ -37,17 +37,17 @@ def genetic():
         r = random.random()
         if r < weight[0]:
             selection.append(population[0])
-        elif r < sum(weight[:index + 2]):
+        elif r < sum(weight[:2]):
             selection.append(population[1])
-        elif r < sum(weight[:index + 3]):
+        elif r < sum(weight[:3]):
             selection.append(population[2])
-        elif r < sum(weight[:index + 4]):
+        elif r < sum(weight[:4]):
             selection.append(population[3])
-        elif r < sum(weight[:index + 5]):
+        elif r < sum(weight[:5]):
             selection.append(population[4])
-        elif r < sum(weight[:index + 6]):
+        elif r < sum(weight[:6]):
             selection.append(population[5])
-        elif r < sum(weight[:index + 7]):
+        elif r < sum(weight[:7]):
             selection.append(population[6])
         else:
             selection.append(population[7])
