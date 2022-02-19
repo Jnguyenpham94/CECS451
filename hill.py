@@ -4,7 +4,7 @@ from board import Board
 
 
 def hill(board, n_queens):
-    count = 0  # loop 5 times then restart board
+    # count = 0  # how many restarts occurred
     n = n_queens
     fitness = board.get_fitness()
     h = [0] * n  # fitness of potential board
@@ -19,11 +19,9 @@ def hill(board, n_queens):
             min_index = h.index(min_h)
             board.map[i][min_index] = 1
             fitness = board.get_fitness()
-        count += 1
-        #  if after 5 loops to bottom row w/o finding the best fitness restart with fresh board
-        if count == 5:
-            count = 0
-            board = Board(n)  # restart with fresh board
+        # count += 1
+        board = Board(n)  # restart with fresh board
+    # print("count: " + str(count))
     return board
 
 
