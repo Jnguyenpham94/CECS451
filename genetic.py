@@ -56,18 +56,17 @@ def genetic():
     for f, b in zip(population, selection):
         ran = random.randint(1, random.randint(1, len(population) - 1))
         children.append(f[:ran] + b[ran:])
-    result_children = []
+    mutate_children = []
     for location in children:
         child = location
         ran = random.randint(0, 4)  # value to insert
         loc_ran = random.randint(0, len(child) - 1)  # location where to insert value
         temp = list(child)
         temp[loc_ran] = ran
-        result_children.append(''.join(map(str, temp)))
-    population.clear()  # clear population for next gen iteration
+        mutate_children.append(''.join(map(str, temp)))
     fitness.clear()
-    population = children
-    for value in result_children:
+    population = mutate_children
+    for value in mutate_children:
         matrix = Board(5)
         for dex in range(len(matrix.map)):
             for c in range(len(matrix.map[dex])):
