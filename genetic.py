@@ -69,19 +69,20 @@ for location in children:
 print("Mutated children: " + str(result_children))
 # convert children into matrix
 population.clear()  # clear population for next gen iteration
+fitness.clear()
 for value in result_children:
     matrix = Board(5)
     for dex in range(len(matrix.map)):
         for c in range(len(matrix.map[dex])):
             if matrix.map[dex][c] == 1:
                 matrix.map[dex][c] = 0
-    # matrix = [[0 for i in range(5)] for j in range(5)]
-    matrix.show_map()
-    for index in len(value):
-        matrix[index]
-    population.append(value)
+        matrix.map[dex][int(value[dex])] = 1
+    if matrix.get_fitness() == 0:
+        goal = matrix
+        break
+    fitness.append(matrix.get_fitness())
 # body end here
 end = time.time() * 1000
 
 print(f"Runtime of the program is {end - start:.2f}ms")
-test.show_map()
+goal.show_map()
