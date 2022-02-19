@@ -1,37 +1,46 @@
-import random
+
 import time
-
-import numpy as np
-
 from board import Board
 
-start = time.time()
 
-# body statement here
-test = Board(5)
-fitness = test.get_fitness()
-current_fit = fitness
-# for i in test.map[0]:
-#     print(i)
-while fitness > 0:
-    row = 0
-    for col, value in enumerate(test.map[row]):
-        if value == 1:
-            current_loc = col
-            change_loc = 0
-            while fitness >= current_fit:
-                test.map[row][current_loc] = 0
-                test.map[row][change_loc] = 1
-                current_fit = test.get_fitness()
-                if current_fit < fitness:
-                    fitness = current_fit
-                    row += 1
-                else:
-                    change_loc += 1
-# result = make_move_steepest_hill(test)
+def hill(board):
+    # body statement here
+    count = 0  # loop 5 times then restart board
+    n = 5
+    fitness = board.get_fitness()
+    h = [0] * n  # fitness of potential board
+    current_fit = fitness
+    while fitness != 0:
+        for i in range(len(board.map)):
+            for j in range(len(board.map[i])):
+                board.map[i] = [0] * n
+                board.map[i][j] = 1
+                h[j] = board.get_fitness()
+                board.map[i][j] = 0
+            min_h = min(h)
+            min_index = h.index(min_h)
+            board.map[i][min_index] = 1
+            fitness = board.get_fitness()
+        count += 1
+        #  if after 5 loops to bottom row restart with fresh board
+        if count == 5:
+            count = 0
+            board = Board(5)  # restart with fresh board
+    return board
 
-# body end here
-end = time.time()
+    # body end here
 
-print(f"Runtime of the program is {(end - start):.2f}")
-# result.show_map()
+
+def main():
+    start = time.time() * 1000
+    test = Board(5)
+    test = hill(test)
+    end = time.time() * 1000
+    # fitness = test.get_fitness()
+    # print(fitness)
+    print(f"Runtime of the program is {(end - start):.2f}ms")
+    test.show_map()
+
+
+if __name__ == '__main__':
+    main()
