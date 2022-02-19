@@ -28,7 +28,7 @@ def hill(board, n_queens):
 
 
 def main():
-    start = time.time() * 1000
+    start = time.time() * 1000  # times 1000 for ms
     n = 5  # CHANGE ME for more or less queens
     test = Board(n)
     test = hill(test, n)

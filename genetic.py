@@ -88,7 +88,7 @@ def genetic():
 
 
 def main():
-    start = time.time() * 1000
+    start = time.time() * 1000  # times 1000 for ms
     global population, fitness  # , count
     population, fitness = populate()
     while not found:
