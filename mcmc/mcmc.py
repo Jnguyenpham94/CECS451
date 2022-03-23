@@ -26,11 +26,18 @@ def mcmc():
     pass
     
 def main(n):
+    print("Part A. The sampling probabilities")
     print("C|-s,r = <,>")
     print("C|-s,-r = <,>")
     print("R|c,-s,w = <,>")
     print("R|-c,-s,w = <,>")
+    
+    print("Part B. The transition probability matrix")
+    
+    print("Part C. The probability for the query")
+    print("C|-s,r = <,>")
 
 if __name__ == "__main__":
     n = 1000000
     main(n)
+    
