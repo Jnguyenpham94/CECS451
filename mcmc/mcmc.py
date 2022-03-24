@@ -20,17 +20,14 @@
 # Part C. The probability for the query
 # P(C|-s,w) = <..., ...>
 
-
-#  place mcmc algorithm here
-def mcmc():
-    pass
-    
+   
 def main(n):
+    #  .4f format
     print("Part A. The sampling probabilities")
-    print("C|-s,r = <,>")
-    print("C|-s,-r = <,>")
-    print("R|c,-s,w = <,>")
-    print("R|-c,-s,w = <,>")
+    print("C|-s,r = a<.36, .05>")
+    print("C|-s,-r = a<.72, .01>")
+    print("R|c,-s,w = a<,>")
+    print("R|-c,-s,w = a<,>")
     
     print("Part B. The transition probability matrix")
     
