@@ -24,10 +24,10 @@
 def main(n):
     #  .4f format
     print("Part A. The sampling probabilities")
-    print("C|-s,r = a<.36, .05>")
-    print("C|-s,-r = a<.72, .01>")
-    print("R|c,-s,w = a<,>")
-    print("R|-c,-s,w = a<,>")
+    print("C|-s,r = a<.8780, .1212>")  #  a = 2.4390
+    print("C|-s,-r = a<.9863, .0137>")  #  a = 1.3699
+    print("R|c,-s,w = a<.3103, .6897>")  #  a = 3.4483
+    print("R|-c,-s,w = a<.8182, .1818>")  #  a = 4.5455
     
     print("Part B. The transition probability matrix")
     print("\tS1\t S2\t S3\t S4")
