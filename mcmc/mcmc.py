@@ -30,6 +30,11 @@ def main(n):
     print("R|-c,-s,w = a<,>")
     
     print("Part B. The transition probability matrix")
+    print("\tS1\t S2\t S3\t S4")
+    print("S1\t .\t .\t .\t .\t")
+    print("S2\t .\t .\t .\t .\t")
+    print("S3\t .\t .\t .\t .\t")
+    print("S4\t .\t .\t .\t .\t")
     
     print("Part C. The probability for the query")
     print("C|-s,r = <,>")
