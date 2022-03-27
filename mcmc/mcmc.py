@@ -30,10 +30,10 @@ def main(n):
     print("S3\t .1800\t .0000\t .1150\t .0200\t")
     print("S4\t .0000\t .0450\t .0900\t .0700\t")
     
-    s1 = [True, True] #  C, R
-    s2 = [True, False]
-    s3 = [False, True]
-    s4 = [False, False]
+    s1 = [True, True] #  C, R ;a
+    s2 = [True, False] # b
+    s3 = [False, True] # c
+    s4 = [False, False] # d
     # counts for each state occurrence
     c1 = 0 
     c2 = 0
@@ -51,8 +51,9 @@ def main(n):
             initial = s3
         elif ran == 4:
             initial = s4
-            
-        pos = random.randint(0, 1) # ctrls position of value change
+        
+        # ctrls position of value change either the C/R value
+        pos = random.randint(0, 1) 
         # choose whether to change to T/F
         if random.randint(0,1) == 0:
             initial[pos] = True
@@ -69,15 +70,15 @@ def main(n):
         elif initial == s4:
             c4 += 1
     print("Part C. The probability for the query")
-    print(c1)
-    print(c2)
-    print(c3)
-    print(c4)
-    x = c1 + c2
-    y = c3 + c4
-    print(f"C|-s,w = <{(x/n):.4f}, {(y/n):.4f}>")
+    # print(c1)
+    # print(c2)
+    # print(c3)
+    # print(c4)
+    x = (c1 + c2)/n # (a + b)/n
+    y = (c3 + c4)/n # (c + d)/n
+    print(f"C|-s,w = <{x:.4f}, {y:.4f}>")
 
 if __name__ == "__main__":
-    n = 1000000
+    n = 1000000  # how many samples to take
     main(n)
     
