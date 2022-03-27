@@ -13,6 +13,9 @@
 # S4 . . . .
 
    
+from random import random
+
+
 def main(n):
     #  .4f format
     print("Part A. The sampling probabilities")
@@ -28,8 +31,25 @@ def main(n):
     print("S3\t .1800\t .0000\t .1150\t .0200\t")
     print("S4\t .0000\t .0450\t .0900\t .0700\t")
     
+    s1 = [True, False, True, True, 0]
+    s2 = [True, False, False, True, 0]
+    s3 = [False, False, True, True, 0]
+    s4 = [False, False, False, True, 0]
+    state = 0
+    for i in range(n):
+        ran = random.randint(1, 5)
+        if ran == 1:
+            state = s1
+        elif ran == 2:
+            state = s2
+        elif ran == 3:
+            state = s3
+        else:
+            state = s4
     print("Part C. The probability for the query")
-    print("C|-s,w = <,>")
+    x = s1[4] + s2[4]
+    y = s3[4] + s4[4]
+    print(f"C|-s,w = <{x:.4f}, {y:.4f}>")
 
 if __name__ == "__main__":
     n = 1000000
