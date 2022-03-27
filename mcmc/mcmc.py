@@ -12,8 +12,7 @@
 # S3 . . . .
 # S4 . . . .
 
-   
-from random import random
+import random
 
 
 def main(n):
@@ -31,25 +30,50 @@ def main(n):
     print("S3\t .1800\t .0000\t .1150\t .0200\t")
     print("S4\t .0000\t .0450\t .0900\t .0700\t")
     
-    s1 = [True, False, True, True, 0]
-    s2 = [True, False, False, True, 0]
-    s3 = [False, False, True, True, 0]
-    s4 = [False, False, False, True, 0]
-    state = 0
+    s1 = [True, True] #  C, R
+    s2 = [True, False]
+    s3 = [False, True]
+    s4 = [False, False]
+    # counts for each state occurrence
+    c1 = 0 
+    c2 = 0
+    c3 = 0
+    c4 = 0
+    initial = 0 
+    # choosing an initial state
+    ran = random.randint(1, 4)
+    if ran == 1:
+        initial = s1
+    elif ran == 2:
+        initial = s2
+    elif ran == 3:
+        initial = s3
+    elif ran == 4:
+        initial = s4
+    
     for i in range(n):
-        ran = random.randint(1, 5)
-        if ran == 1:
-            state = s1
-        elif ran == 2:
-            state = s2
-        elif ran == 3:
-            state = s3
+        ran1 = random.randint(0, 1) # ctrls whether true or false
+        pos = random.randint(0, 1) # ctrls position of value change
+        if ran1 == 0:
+            initial[pos] = True
         else:
-            state = s4
+            initial[pos] = False
+        if initial == s1:
+            c1 += 1
+        elif initial == s2:
+            c2 += 1
+        elif initial == s3:
+            c3 += 1
+        elif initial == s4:
+            c4 += 1
     print("Part C. The probability for the query")
-    x = s1[4] + s2[4]
-    y = s3[4] + s4[4]
-    print(f"C|-s,w = <{x:.4f}, {y:.4f}>")
+    print(c1)
+    print(c2)
+    print(c3)
+    print(c4)
+    x = c1 + c2
+    y = c3 + c4
+    print(f"C|-s,w = <{(x/n):.4f}, {(y/n):.4f}>")
 
 if __name__ == "__main__":
     n = 1000000
