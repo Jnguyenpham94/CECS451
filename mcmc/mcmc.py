@@ -24,7 +24,7 @@ def main(n):
     print("R|-c,-s,w = <.8182, .1818>")  #  a = 4.5455
     
     print("Part B. The transition probability matrix")
-    print("\tS1\t S2\t S3\t S4")
+    print("\t S1\t S2\t S3\t S4")
     print("S1\t .5400\t .0050\t .0250\t .0000\t")
     print("S2\t .3600\t .0500\t .0000\t .0450\t")
     print("S3\t .1800\t .0000\t .1150\t .0200\t")
@@ -40,24 +40,26 @@ def main(n):
     c3 = 0
     c4 = 0
     initial = 0 
-    # choosing an initial state
-    ran = random.randint(1, 4)
-    if ran == 1:
-        initial = s1
-    elif ran == 2:
-        initial = s2
-    elif ran == 3:
-        initial = s3
-    elif ran == 4:
-        initial = s4
-    
     for i in range(n):
-        ran1 = random.randint(0, 1) # ctrls whether true or false
+        # choosing an initial state
+        ran = random.randint(1, 4)
+        if ran == 1:
+            initial = s1
+        elif ran == 2:
+            initial = s2
+        elif ran == 3:
+            initial = s3
+        elif ran == 4:
+            initial = s4
+            
         pos = random.randint(0, 1) # ctrls position of value change
-        if ran1 == 0:
+        # choose whether to change to T/F
+        if random.randint(0,1) == 0:
             initial[pos] = True
         else:
             initial[pos] = False
+        
+        # check what state moved to
         if initial == s1:
             c1 += 1
         elif initial == s2:
