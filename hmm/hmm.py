@@ -59,7 +59,7 @@ def main(args):
                 probs.append(i)
 
     hmm(probs[0:5], (eValues[0], eValues[1]))  # line 1 from cpt.txt
-    hmm(probs[5:10], (eValues[2], eValues[3])) # line 2 from cpt.txt
+    hmm(probs[5:10], (eValues[2], eValues[3]))  # line 2 from cpt.txt
 
 
 if __name__ == '__main__':
