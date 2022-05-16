@@ -1,3 +1,5 @@
+# generates a solution to a board (5 x 5) using genetic algorithm
+
 import time
 import random
 from board import Board
@@ -38,7 +40,6 @@ def genetic():
         weight.append(i / (sum(fitness)))
     # selection of pairs
     weight.sort(reverse=True)  # descending order weights
-    index = 0
     selection = []
     for j in range(len(population)):
         r = random.random()
@@ -89,7 +90,7 @@ def genetic():
 
 def main():
     start = time.time() * 1000  # times 1000 for ms
-    global population, fitness  # , count
+    global population, fitness  
     population, fitness = populate()
     while not found:
         genetic()
@@ -100,6 +101,6 @@ def main():
     # print("count: " + str(count))
     goal.show_map()
 
-
+# main function
 if __name__ == '__main__':
     main()

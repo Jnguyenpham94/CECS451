@@ -1,4 +1,4 @@
-
+# generates a solution to a board (5 x 5) usinng hill climbing algorithm
 import time
 from board import Board
 
